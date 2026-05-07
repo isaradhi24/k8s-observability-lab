@@ -9,7 +9,7 @@ spec:
 
   source:
     repoURL: https://github.com/isaradhi24/k8s-observability-lab.git
-    targetRevision: HEAD
+    targetRevision: main 
     path: apps/nginx
 
   destination:
