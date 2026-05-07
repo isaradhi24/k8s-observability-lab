@@ -1,0 +1,7 @@
+grafana:
+  image:
+    tag: 10.4.2
+
+prometheus:
+  prometheusSpec:
+    retention: 7d

@@ -1,0 +1,48 @@
+kube_join.sh
+*.token
+passwords.txt
+working_notes.txt
+*.txt
+*.log
+
+# Ignore installers folder
+installers/
+# Ignore jenkins-plugin-manager.jar
+jenkins_home/jenkins-plugin-manager.jar
+secrets/
+docs/
+*.exe
+.ruby-version
+infra/manifests/repo-secret.yaml
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# IntelliJ
+.idea/
+
+# Logs
+*.log
+
+# Temp
+tmp/
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+
+# kubeconfig
+kubeconfig
+
+# secrets
+*.pem
+*.key
+*.crt
+
+# ArgoCD password notes
+docs/argocd-credentials.txt
