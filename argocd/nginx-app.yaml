@@ -8,7 +8,7 @@ spec:
   project: default  
 
   source:
-    repoURL: ' https://github.com/YOUR_GITHUB_USERNAME/devops-kind-lab.git'
+    repoURL: https://github.com/isaradhi24/k8s-observability-lab.git
     targetRevision: HEAD
     path: apps/nginx
 
