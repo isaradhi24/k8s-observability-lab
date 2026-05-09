@@ -6,8 +6,6 @@ metadata:
     app: nginx
 
 spec:
-  replicas: 5
-
   selector:
     matchLabels:
       app: nginx 
