@@ -41,11 +41,7 @@ flowchart TD
 ```
 
 
-
-
-
-
-## Order of Starting K8s-Observability-Lab
+### Order of Starting K8s-Observability-Lab
 
 ## First Start Docker Desktop first And then start WSL (Ubuntu-20.04)
 

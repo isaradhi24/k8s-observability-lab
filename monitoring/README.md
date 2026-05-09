@@ -48,12 +48,48 @@ Password:  <from above step>
 
 ## Grafana Checks
 
-Go to: Dashboards
-        You should see:
-        - Kubernetes Cluster Overview
-        - Node Exporter
-        - Kubernetes Pods
-        - API Server metrics
+# 1. Login Success
+       * Grafana accessible
+       * admin password works
+       * Prometheus datasource healthy
+
+# 2. Verify Dashboards
+    Search these dashboards: kubernetes / Compute Resources / Cluster
+    Check:
+        * cluster CPU
+        * memory
+        * pod count
+
+# 3. Verify Kubernetes / Compute Resources / Node
+        * all 3 KIND nodes visible
+        * CPU + RAM graphs updating
+
+# 4. Verify Kubernetes / Compute Resources / Pod
+        * nginx pods visible
+        * CPU/memory metrics flowing
+
+# 5. Verify Node Exporter Full
+        ** This is the important infra dashboard.
+
+          * filesystem
+          * network
+          * load averages
+          * memory
+          * CPU utilization
+
+# 6. Cross Verify With kubectl ( Very important operational habit)
+
+    Run in wsl terminal
+    ```bash
+        kubectl top nodes
+        kubectl top pods -A
+    ```
+    Then compare with Grafana graphs.
+    This proves:
+            metrics-server
+            Prometheus
+            Grafana
+    are all functioning correctly.
 
 ## Verify any app is OutofSync in ArgoCD
 
