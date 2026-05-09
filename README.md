@@ -41,18 +41,20 @@ flowchart TD
 
 
 
+## Order of Starting K8s-Observability-Lab
 
-## Start Docker Desktop first
-## and then start WSL (Ubuntu-20.04)
+## First Start Docker Desktop first
+## And then start WSL (Ubuntu-20.04)
 
-## Kubernetes Lab Health Check
+## Check Lab Health
 
-## 🧭 1. Cluster Basics
+# 🧭 1. Cluster Basics
 
-### Check nodes
+# Check nodes
 ```bash
 kubectl get nodes -o wide
 ```
+
 if you see errors like ---- "connection refused 127.0.0.1:39495"
 
 ## Troubleshooting
