@@ -1,3 +1,5 @@
+### Lab Workflow architecture
+
 ```mermaid
 flowchart TD
 
@@ -37,6 +39,8 @@ flowchart TD
 
     GRAF --> PROM
 ```
+
+
 
 
 
