@@ -1,0 +1,25 @@
+# This YAML file defines an Ingress resource for a Kubernetes cluster. 
+# The Ingress is named "nginx-ingress" and uses the "nginx" ingress class. 
+# It specifies a rule that routes HTTP traffic with a path prefix of "/" to a backend service named "nginx-service" on port 80. 
+# This allows external traffic to access the nginx service through the Ingress.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: nginx-ingress
+
+spec:
+  ingressClassName: nginx
+
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80
