@@ -306,7 +306,7 @@ kubectl describe pod -n argocd <pod>
 ### After ArgoCD up and verything is running
 ## Portfowarding
 ```bash
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl port-forward svc/argocd-server -n argocd 8080:443 > /dev/null 2>&1 &
 or
 ### if your on vm run below
 kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443  
