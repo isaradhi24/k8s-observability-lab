@@ -43,14 +43,13 @@ flowchart TD
 
 ## Order of Starting K8s-Observability-Lab
 
-## First Start Docker Desktop first
-## And then start WSL (Ubuntu-20.04)
+## First Start Docker Desktop first And then start WSL (Ubuntu-20.04)
 
 ## Check Lab Health
 
-# 🧭 1. Cluster Basics
+## 🧭 1. Cluster Basics
 
-# Check nodes
+## Check nodes
 ```bash
 kubectl get nodes -o wide
 ```
