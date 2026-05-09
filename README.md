@@ -1,3 +1,47 @@
+```mermaid
+flowchart TD
+
+    DEV[Developer Pushes Code to GitHub]
+
+    GIT[GitHub Repository]
+
+    ARGO[ArgoCD GitOps Controller]
+
+    KIND[KIND Kubernetes Cluster]
+
+    APP[Nginx Application]
+
+    HPA[Horizontal Pod Autoscaler]
+
+    METRICS[Metrics Server]
+
+    PROM[Prometheus]
+
+    GRAF[Grafana Dashboards]
+
+    DEV --> GIT
+
+    GIT --> ARGO
+
+    ARGO --> KIND
+
+    KIND --> APP
+
+    METRICS --> HPA
+
+    HPA --> APP
+
+    PROM --> KIND
+
+    PROM --> APP
+
+    GRAF --> PROM
+```
+
+
+
+
+
 ## Start Docker Desktop first
 ## and then start WSL (Ubuntu-20.04)
 
@@ -163,20 +207,15 @@ Disable ALL distros.
 Apply & Restart.
 
 Then enable ONLY:
-
 Ubuntu-20.04
-
 Apply & Restart.
 
 Step 6 — Verify immediately
-
-Inside Ubuntu:
-
-which docker
-docker version
-kind get clusters
-kubectl get nodes
-
+  Inside Ubuntu:
+    which docker
+    docker version
+    kind get clusters
+    kubectl get nodes
 =============================================
 
 Once docker works, continue with cluster health checks
@@ -200,15 +239,12 @@ kubectl get nodes
 if kind not present then recreate cluster
 kind create cluster --name devops-lab --config ~/kind-multi.yaml
 
-
 ## Step 1: Check if API Server container is running
 ```bash
 sudo crictl ps | grep kube-apiserver
 ```
 
-
-
-## Step1: Check Container runtime
+## Step2: Check Container runtime
 ```bash
   sudo systemctl status containerd
 ```
@@ -216,7 +252,7 @@ if you see inactive, restart containerd and verify again
 ```bash
   sudo systemctl restart containerd
 ```
-## Step2: Check kubelet (most common root cause)
+## Step3: Check kubelet (most common root cause)
     The API server is managed by the kubelet as a static pod.
     If it’s not active (running), that’s your problem.
       ```bash
@@ -231,7 +267,7 @@ if you see inactive, restart containerd and verify again
           container runtime not running
           config file missing  
 
-## Step 3: Check static pod manifests
+## Step 4: Check static pod manifests
     Kubernetes control plane runs from:
     ```bash
         ls /etc/kubernetes/manifests/
@@ -243,34 +279,58 @@ if you see inactive, restart containerd and verify again
       etcd.yaml
       If these are missing → cluster was never fully initialized.
 
-## Step 4: Check etcd (API server depends on it)
+## Step 5: Check etcd (API server depends on it)
     ```bash
       sudo crictl ps | grep etcd
     ```
       If etcd is down → API server will refuse connections exactly like this.
 
-## Step 5: Verify port 6443
+## Step 6: Verify port 6443
     ```bash
         sudo netstat -tulnp | grep 6443
     ```
         No output = nothing is listening → confirms API server is dead.
 
+### very useful operational checks
+
+## HPA Verification Section  
+```bash
+kubectl get hpa
+kubectl describe hpa nginx-hpa
+```
+Verify:
+
+   * Current replicas
+   * CPU targets
+   * scaling events
+
+## Metrics Verification
+```bash
+kubectl top nodes
+kubectl top pods -A
+```
+
+Ensure metrics are working:
+
+    * HPA works
+    * kubectl top works
+    * monitoring pipeline healthy
 
 
 
+================================================
 
-
-### Cluster info
+## 1. Cluster info
 ```bash
 kubectl cluster-info
 ```
 
-### Component status
+## 2. Component status
 ```bash
 kubectl get componentstatuses
 ```
 
-## 📦 2. System Pods (kube-system)
+## 📦 3. System Pods (kube-system)
 ```bash
 kubectl get pods -n kube-system -o wide
 kubectl get ds -n kube-system
@@ -279,7 +339,16 @@ kubectl get deploy -n kube-system
 
 ## 🔥 3. ArgoCD Health Check
 
-### Namespace
+## Verify ArgoCD Application Status
+```bash
+kubectl get applications -n argocd
+```
+Expected:
+```bash
+  SYNC STATUS: Synced
+  HEALTH STATUS: Healthy
+```
+## Namespace
 ```bash
 kubectl get ns argocd
 ```
@@ -325,14 +394,9 @@ url : https://120.0.0.1:8080
 user: admin
 passowd: from above step
 
-
 ### Services
 ```bash
 kubectl get svc -n argocd
-```
-### Applications
-```bash
-kubectl get applications -n argocd
 ```
 
 ## ⚙️ 4. Workload Overview

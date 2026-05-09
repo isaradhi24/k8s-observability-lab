@@ -1,8 +1,16 @@
-## Observability Verification Commands
 
-## Proetheus
+### IMPORTANT GitOps Learning 
 
-Port-forwading:
+``` bash
+Git is the source of truth in GitOps.
+Any manual kubectl changes may be reverted automatically by ArgoCD self-heal.
+```
+
+### Observability Verification Commands
+
+## Prometheus
+
+Port-forwarding:
 ```
 kubectl port-forward svc/monitoring-kube-prometheus-prometheus -n monitoring 9090:9090 > /dev/null 2>&1 &
 ```
@@ -10,15 +18,16 @@ Open in browser: http://localhost:9090
 
 ## Verify Targets In Prometheus UI:
 
-``` Status --> Targets ```, expected 'UP' for
-            kubelet
-            node-exporter
-            kube-state-metrics
-            apiserver
-            etcd
+``` Status --> Targets ```
+        Expected UP for most targets like:
+                - kubelet
+                - node-exporter
+                - kube-state-metrics
+                - apiserver
 
-    if you see any of these targets failed/down
-        This is because of KIND local cluster limitation, in prod env these targets works fine.
+        NOTE:
+        etcd, scheduler, controller-manager, kube-proxy may show DOWN in KIND clusters because of local container networking limitations.
+        This is expected in local labs.
         In lab YOU CAN IGNORE THEM SAFELY.  
     
 
@@ -37,15 +46,14 @@ Open:  http://localhost:3000
 Username: admin
 Password:  <from above step>
 
-Grafana Checks
+## Grafana Checks
 
 Go to: Dashboards
-You should see:
-   - Kubernetes Cluster Overview
-   - Node Exporter
-   - Kubernetes Pods
-   - API Server metrics
-
+        You should see:
+        - Kubernetes Cluster Overview
+        - Node Exporter
+        - Kubernetes Pods
+        - API Server metrics
 
 ## Verify any app is OutofSync in ArgoCD
 
@@ -53,11 +61,11 @@ If you find any like " <app-name> OutOfSunc Healthy"
 
 Usually caused by one of these:
 
-   * HPA modifies replicas dynamically
-   * ArgoCD compares live replicas vs Git replicas
-   * HPA + Deployment replica drift
+   * HPA dynamically manages Deployment replica count based on metrics.
+   * ArgoCD may detect drift if replicas are also statically defined in deployment.yaml.
+ 
 
-## Verify What Is OutOfSync
+## Troubleshoot why it is OutOfSync
 
 In terminal
 ```kubectl describe application nginx-app -n argocd```
@@ -76,4 +84,5 @@ Fix :
 Learning Poing:  
     When using HPA, ``` Do NOT manually controll replicas in deployment```
 
-
+If still OutOfSync ---> (IMPROTANT)
+    vefiy any typos, syntax errors in manifests
