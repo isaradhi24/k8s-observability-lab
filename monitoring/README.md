@@ -36,10 +36,10 @@ Grafana Checks
 
 Go to: Dashboards
 You should see:
-   * Kubernetes Cluster Overview
-   * Node Exporter
-   * Kubernetes Pods
-   * API Server metrics
+   - Kubernetes Cluster Overview
+   - Node Exporter
+   - Kubernetes Pods
+   - API Server metrics
 
 
 ## Verify any app is OutofSync in ArgoCD
