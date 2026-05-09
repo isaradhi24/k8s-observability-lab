@@ -17,6 +17,11 @@ Open in browser: http://localhost:9090
             apiserver
             etcd
 
+    if you see any of these targets failed/down
+        This is because of KIND local cluster limitation, in prod env these targets works fine.
+        In lab YOU CAN IGNORE THEM SAFELY.  
+    
+
 ## Grafana
 
 Port-forward:
